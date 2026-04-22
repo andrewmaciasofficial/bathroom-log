@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bathroom Log – Promesa Academy</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 16px; color: #222; }
+  h1 { font-size: 20px; font-weight: bold; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #666; margin-bottom: 16px; }
+  .badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 6px; margin-left: 8px; }
+
+  /* Stats */
+  .stats { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 100px; }
+  .stat-label { font-size: 11px; color: #888; margin-bottom: 2px; }
+  .stat-val { font-size: 24px; font-weight: bold; color: #222; }
+
+  /* Form */
+  .controls { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
+  .controls input, .controls select {
+    border: 1px solid #ccc; border-radius: 6px; padding: 8px 10px;
+    font-size: 14px; background: #fff; color: #222;
+  }
+  .controls input { width: 180px; }
+  .add-btn {
+    background: #2563eb; color: #fff; border: none; border-radius: 6px;
+    padding: 8px 18px; font-size: 14px; font-weight: bold; cursor: pointer;
+  }
+  .add-btn:hover { background: #1d4ed8; }
+  .clear-btn {
+    background: #fff; color: #888; border: 1px solid #ddd;
+    border-radius: 6px; padding: 8px 14px; font-size: 13px; cursor: pointer; margin-left: auto;
+  }
+  .clear-btn:hover { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+
+  /* Table */
+  .table-wrap { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { background: #f9f9f9; color: #666; font-size: 12px; font-weight: bold; padding: 9px 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
+  td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr.warn td { background: #fffbeb; }
+
+  .badge-out { background: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 99px; }
+  .badge-back { background: #dcfce7; color: #166534; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 99px; }
+  .warn-text { color: #b45309; font-weight: bold; }
+
+  .return-btn {
+    background: #fff; border: 1px solid #ccc; border-radius: 6px;
+    padding: 4px 12px; font-size: 13px; cursor: pointer; color: #333;
+  }
+  .return-btn:hover { background: #f0fdf4; border-color: #86efac; color: #166534; }
+  .del-btn {
+    background: transparent; border: none; color: #ccc;
+    font-size: 16px; cursor: pointer; padding: 2px 6px; border-radius: 4px;
+  }
+  .del-btn:hover { color: #dc2626; background: #fee2e2; }
+  .empty { text-align: center; color: #aaa; font-size: 14px; padding: 32px 0; }
+  .name-bold { font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+  <span style="font-size:26px;">🚻</span>
+  <h1>Bathroom Log <span class="badge" id="today-date"></span></h1>
+</div>
+<div class="subtitle">Promesa Academy — Edit the page title above to add your grade/class name</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-label">Out right now</div><div class="stat-val" id="stat-out">0</div></div>
+  <div class="stat"><div class="stat-label">Total trips today</div><div class="stat-val" id="stat-total">0</div></div>
+  <div class="stat"><div class="stat-label">Avg. time (min)</div><div class="stat-val" id="stat-avg">—</div></div>
+</div>
+
+<div class="controls">
+  <input type="text" id="name-input" placeholder="Student name" />
+  <select id="dest-select">
+    <option value="🚻 Restroom">🚻 Restroom</option>
+    <option value="🚺 Girls">🚺 Girls</option>
+    <option value="🚹 Boys">🚹 Boys</option>
+    <option value="💧 Water">💧 Water</option>
+    <option value="🏥 Nurse">🏥 Nurse</option>
+  </select>
+  <button class="add-btn" onclick="sendOut()">+ Send Out</button>
+  <button class="clear-btn" onclick="clearAll()">Clear log</button>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Destination</th>
+        <th>Time Out</th>
+        <th>Time Back</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="log-body">
+      <tr><td colspan="7" class="empty">No trips yet — enter a name and click Send Out.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const entries = [];
+
+  function pad(n) { return String(n).padStart(2,'0'); }
+  function fmtTime(d) {
+    let h = d.getHours(), m = d.getMinutes(), ap = h >= 12 ? 'pm' : 'am';
+    h = h % 12 || 12;
+    return h + ':' + pad(m) + ' ' + ap;
+  }
+  function elapsed(start, end) {
+    const mins = Math.round((end - start) / 60000);
+    return mins < 1 ? '< 1 min' : mins + ' min';
+  }
+  function setDate() {
+    const d = new Date();
+    document.getElementById('today-date').textContent =
+      d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+  }
+  function updateStats() {
+    const out = entries.filter(e => !e.back).length;
+    const done = entries.filter(e => e.back);
+    const avg = done.length
+      ? Math.round(done.reduce((s,e) => s + (e.back - e.out), 0) / done.length / 60000)
+      : null;
+    document.getElementById('stat-out').textContent = out;
+    document.getElementById('stat-total').textContent = entries.length;
+    document.getElementById('stat-avg').textContent = avg !== null ? avg : '—';
+  }
+  function render() {
+    const tbody = document.getElementById('log-body');
+    if (!entries.length) {
+      tbody.innerHTML = '<tr><td colspan="7" class="empty">No trips yet — enter a name and click Send Out.</td></tr>';
+      updateStats(); return;
+    }
+    const now = new Date();
+    tbody.innerHTML = [...entries].reverse().map((e, ri) => {
+      const i = entries.length - 1 - ri;
+      const dur = e.back ? elapsed(e.out, e.back) : elapsed(e.out, now);
+      const mins = e.back ? 0 : Math.round((now - e.out) / 60000);
+      const warn = !e.back && mins >= 10;
+      return `<tr class="${warn ? 'warn' : ''}">
+        <td class="name-bold">${e.name}</td>
+        <td>${e.dest}</td>
+        <td>${fmtTime(e.out)}</td>
+        <td>${e.back ? fmtTime(e.back) : '<span style="color:#ccc">—</span>'}</td>
+        <td class="${warn ? 'warn-text' : ''}">${dur}${warn ? ' ⚠️' : ''}</td>
+        <td>${e.back ? '<span class="badge-back">back</span>' : '<span class="badge-out">out</span>'}</td>
+        <td style="display:flex;gap:6px;align-items:center;">
+          ${!e.back ? `<button class="return-btn" onclick="markBack(${i})">Mark back</button>` : ''}
+          <button class="del-btn" onclick="del(${i})" title="Delete">✕</button>
+        </td>
+      </tr>`;
+    }).join('');
+    updateStats();
+  }
+  function sendOut() {
+    const el = document.getElementById('name-input');
+    const name = el.value.trim();
+    if (!name) { el.style.borderColor = 'red'; setTimeout(() => el.style.borderColor = '#ccc', 1200); return; }
+    const dest = document.getElementById('dest-select').value;
+    entries.push({ name, dest, out: new Date(), back: null });
+    el.value = '';
+    el.focus();
+    render();
+  }
+  function markBack(i) { entries[i].back = new Date(); render(); }
+  function del(i) { entries.splice(i, 1); render(); }
+  function clearAll() {
+    if (!entries.length) return;
+    if (confirm('Clear all entries for today?')) { entries.length = 0; render(); }
+  }
+  document.getElementById('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendOut(); });
+  setDate();
+  render();
+  setInterval(render, 30000);
+</script>
+</body>
+</html>
