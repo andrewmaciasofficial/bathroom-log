@@ -3,97 +3,94 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Bathroom Log – Promesa Academy</title>
+<title>Hall Pass Log – Promesa Academy</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 16px; color: #222; }
-  h1 { font-size: 20px; font-weight: bold; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: #666; margin-bottom: 16px; }
-  .badge { display: inline-block; background: #dbeafe; color: #1e40af; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 6px; margin-left: 8px; }
-
-  /* Stats */
-  .stats { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-  .stat { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 10px 16px; flex: 1; min-width: 100px; }
-  .stat-label { font-size: 11px; color: #888; margin-bottom: 2px; }
-  .stat-val { font-size: 24px; font-weight: bold; color: #222; }
-
-  /* Form */
-  .controls { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
-  .controls input, .controls select {
-    border: 1px solid #ccc; border-radius: 6px; padding: 8px 10px;
-    font-size: 14px; background: #fff; color: #222;
-  }
-  .controls input { width: 180px; }
-  .add-btn {
-    background: #2563eb; color: #fff; border: none; border-radius: 6px;
-    padding: 8px 18px; font-size: 14px; font-weight: bold; cursor: pointer;
-  }
-  .add-btn:hover { background: #1d4ed8; }
-  .clear-btn {
-    background: #fff; color: #888; border: 1px solid #ddd;
-    border-radius: 6px; padding: 8px 14px; font-size: 13px; cursor: pointer; margin-left: auto;
-  }
-  .clear-btn:hover { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
-
-  /* Table */
-  .table-wrap { background: #fff; border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th { background: #f9f9f9; color: #666; font-size: 12px; font-weight: bold; padding: 9px 12px; text-align: left; border-bottom: 1px solid #e0e0e0; }
-  td { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr.warn td { background: #fffbeb; }
-
-  .badge-out { background: #fef3c7; color: #92400e; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 99px; }
-  .badge-back { background: #dcfce7; color: #166534; font-size: 12px; font-weight: bold; padding: 3px 10px; border-radius: 99px; }
-  .warn-text { color: #b45309; font-weight: bold; }
-
-  .return-btn {
-    background: #fff; border: 1px solid #ccc; border-radius: 6px;
-    padding: 4px 12px; font-size: 13px; cursor: pointer; color: #333;
-  }
-  .return-btn:hover { background: #f0fdf4; border-color: #86efac; color: #166534; }
-  .del-btn {
-    background: transparent; border: none; color: #ccc;
-    font-size: 16px; cursor: pointer; padding: 2px 6px; border-radius: 4px;
-  }
-  .del-btn:hover { color: #dc2626; background: #fee2e2; }
-  .empty { text-align: center; color: #aaa; font-size: 14px; padding: 32px 0; }
-  .name-bold { font-weight: bold; }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f0f4ff;padding:16px;color:#222;}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.top h1{font-size:20px;font-weight:bold;}
+.datebadge{background:#dbeafe;color:#1e40af;font-size:12px;font-weight:bold;padding:3px 12px;border-radius:20px;}
+.sub{font-size:13px;color:#666;margin-bottom:14px;}
+.grade-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px;}
+.grade-btn{background:#fff;border:1.5px solid #d1d5db;border-radius:20px;padding:5px 14px;font-size:13px;font-weight:bold;cursor:pointer;color:#444;transition:all .15s;}
+.grade-btn:hover{border-color:#2563eb;color:#2563eb;}
+.grade-btn.active{background:#2563eb;color:#fff;border-color:#2563eb;}
+.stats{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.stat{background:#fff;border:1px solid #e0e0e0;border-radius:8px;padding:10px 14px;flex:1;min-width:90px;text-align:center;}
+.stat-label{font-size:11px;color:#999;margin-bottom:2px;}
+.stat-val{font-size:26px;font-weight:bold;color:#222;}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center;}
+input[type=text]{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:14px;width:160px;}
+select{border:1px solid #ccc;border-radius:6px;padding:8px 10px;font-size:14px;background:#fff;color:#222;}
+.btn-send{background:#2563eb;color:#fff;border:none;border-radius:6px;padding:9px 18px;font-size:14px;font-weight:bold;cursor:pointer;}
+.btn-send:hover{background:#1d4ed8;}
+.btn-clear{background:#fff;color:#999;border:1px solid #ddd;border-radius:6px;padding:8px 12px;font-size:13px;cursor:pointer;margin-left:auto;}
+.btn-clear:hover{background:#fee2e2;color:#b91c1c;}
+.table-wrap{background:#fff;border:1px solid #ddd;border-radius:10px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;font-size:14px;}
+th{background:#f3f4f6;color:#555;font-size:12px;font-weight:bold;padding:9px 10px;text-align:left;border-bottom:1px solid #e5e7eb;}
+td{padding:9px 10px;border-bottom:1px solid #f3f4f6;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr.warn td{background:#fffbeb;}
+.badge-out{background:#fef3c7;color:#92400e;font-size:12px;font-weight:bold;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.badge-back{background:#dcfce7;color:#166534;font-size:12px;font-weight:bold;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.grade-tag{background:#ede9fe;color:#5b21b6;font-size:11px;font-weight:bold;padding:2px 8px;border-radius:20px;white-space:nowrap;}
+.btn-back{background:#fff;border:1px solid #ccc;border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer;}
+.btn-back:hover{background:#f0fdf4;border-color:#86efac;}
+.btn-del{background:none;border:none;color:#ccc;font-size:15px;cursor:pointer;padding:2px 5px;border-radius:4px;}
+.btn-del:hover{color:#dc2626;background:#fee2e2;}
+.warn-txt{color:#b45309;font-weight:bold;}
+.empty{text-align:center;color:#bbb;font-size:14px;padding:28px 0;}
+.loc-icon{margin-right:4px;}
 </style>
 </head>
 <body>
 
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-  <span style="font-size:26px;">🚻</span>
-  <h1>Bathroom Log <span class="badge" id="today-date"></span></h1>
+<div class="top">
+  <span style="font-size:26px;">🏫</span>
+  <h1>Hall Pass Log</h1>
+  <span class="datebadge" id="datebadge"></span>
 </div>
-<div class="subtitle">Promesa Academy — Edit the page title above to add your grade/class name</div>
+<div class="sub">Promesa Academy — select a grade then send a student out</div>
+
+<div class="grade-bar" id="gradeBar"></div>
 
 <div class="stats">
-  <div class="stat"><div class="stat-label">Out right now</div><div class="stat-val" id="stat-out">0</div></div>
-  <div class="stat"><div class="stat-label">Total trips today</div><div class="stat-val" id="stat-total">0</div></div>
-  <div class="stat"><div class="stat-label">Avg. time (min)</div><div class="stat-val" id="stat-avg">—</div></div>
+  <div class="stat"><div class="stat-label">Out Now</div><div class="stat-val" id="s-out">0</div></div>
+  <div class="stat"><div class="stat-label">Total Today</div><div class="stat-val" id="s-total">0</div></div>
+  <div class="stat"><div class="stat-label">Avg (min)</div><div class="stat-val" id="s-avg">—</div></div>
 </div>
 
 <div class="controls">
-  <input type="text" id="name-input" placeholder="Student name" />
-  <select id="dest-select">
-    <option value="🚻 Restroom">🚻 Restroom</option>
-    <option value="🚺 Girls">🚺 Girls</option>
-    <option value="🚹 Boys">🚹 Boys</option>
-    <option value="💧 Water">💧 Water</option>
+  <select id="gradeSelect"></select>
+  <input type="text" id="nameInput" placeholder="Student name" />
+  <select id="destSelect">
+    <option value="🚹 Boys Restroom">🚹 Boys Restroom</option>
+    <option value="🚺 Girls Restroom">🚺 Girls Restroom</option>
+    <option value="🤝 Promise Room">🤝 Promise Room</option>
+    <option value="🍽️ Cafeteria">🍽️ Cafeteria</option>
     <option value="🏥 Nurse">🏥 Nurse</option>
+    <option value="🏢 Front Office">🏢 Front Office</option>
+    <option value="📚 Library">📚 Library</option>
+    <option value="🏃 Gym / PE">🏃 Gym / PE</option>
+    <option value="💧 Water Fountain">💧 Water Fountain</option>
+    <option value="🎨 Art Room">🎨 Art Room</option>
+    <option value="🎵 Music Room">🎵 Music Room</option>
+    <option value="💻 Computer Lab">💻 Computer Lab</option>
+    <option value="🅿️ Counselor">🅿️ Counselor</option>
+    <option value="🚪 Other">🚪 Other</option>
   </select>
-  <button class="add-btn" onclick="sendOut()">+ Send Out</button>
-  <button class="clear-btn" onclick="clearAll()">Clear log</button>
+  <button class="btn-send" onclick="sendOut()">+ Send Out</button>
+  <button class="btn-clear" onclick="clearAll()">Clear Log</button>
 </div>
 
 <div class="table-wrap">
   <table>
     <thead>
       <tr>
+        <th>Grade</th>
         <th>Student</th>
-        <th>Destination</th>
+        <th>Location</th>
         <th>Time Out</th>
         <th>Time Back</th>
         <th>Duration</th>
@@ -101,87 +98,123 @@
         <th></th>
       </tr>
     </thead>
-    <tbody id="log-body">
-      <tr><td colspan="7" class="empty">No trips yet — enter a name and click Send Out.</td></tr>
+    <tbody id="logBody">
+      <tr><td colspan="8" class="empty">No trips yet — select a grade, enter a name, and click Send Out.</td></tr>
     </tbody>
   </table>
 </div>
 
 <script>
-  const entries = [];
+var grades = ['Pre-K','Kinder','1st','2nd','3rd','4th','5th','6th'];
+var entries = [];
+var activeGrade = 'All';
 
-  function pad(n) { return String(n).padStart(2,'0'); }
-  function fmtTime(d) {
-    let h = d.getHours(), m = d.getMinutes(), ap = h >= 12 ? 'pm' : 'am';
-    h = h % 12 || 12;
-    return h + ':' + pad(m) + ' ' + ap;
+function pad(n){return('0'+n).slice(-2);}
+function fmt(d){var h=d.getHours(),m=d.getMinutes(),ap=h>=12?'pm':'am';h=h%12||12;return h+':'+pad(m)+' '+ap;}
+function mins(a,b){return Math.round((b-a)/60000);}
+function dur(a,b){var m=mins(a,b);return m<1?'< 1 min':m+' min';}
+
+function setDate(){
+  var d=new Date();
+  document.getElementById('datebadge').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+}
+
+function buildGradeBar(){
+  var bar=document.getElementById('gradeBar');
+  var sel=document.getElementById('gradeSelect');
+  var allBtn='<button class="grade-btn active" onclick="filterGrade(\'All\',this)">All Grades</button>';
+  bar.innerHTML=allBtn;
+  sel.innerHTML='';
+  grades.forEach(function(g){
+    var btn=document.createElement('button');
+    btn.className='grade-btn';
+    btn.textContent=g;
+    btn.setAttribute('onclick','filterGrade(\''+g+'\',this)');
+    bar.appendChild(btn);
+    var opt=document.createElement('option');
+    opt.value=g;opt.textContent=g;
+    sel.appendChild(opt);
+  });
+}
+
+function filterGrade(g,el){
+  activeGrade=g;
+  document.querySelectorAll('.grade-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+  if(g!=='All'){document.getElementById('gradeSelect').value=g;}
+  render();
+}
+
+function updateStats(){
+  var filtered=activeGrade==='All'?entries:entries.filter(function(e){return e.grade===activeGrade;});
+  var out=filtered.filter(function(e){return!e.back;}).length;
+  var done=filtered.filter(function(e){return e.back;});
+  var avg=done.length?Math.round(done.reduce(function(s,e){return s+mins(e.out,e.back);},0)/done.length):null;
+  document.getElementById('s-out').textContent=out;
+  document.getElementById('s-total').textContent=filtered.length;
+  document.getElementById('s-avg').textContent=avg!==null?avg:'—';
+}
+
+function render(){
+  var tb=document.getElementById('logBody');
+  var filtered=activeGrade==='All'?entries:entries.filter(function(e){return e.grade===activeGrade;});
+  if(!filtered.length){
+    tb.innerHTML='<tr><td colspan="8" class="empty">No trips yet — select a grade, enter a name, and click Send Out.</td></tr>';
+    updateStats();return;
   }
-  function elapsed(start, end) {
-    const mins = Math.round((end - start) / 60000);
-    return mins < 1 ? '< 1 min' : mins + ' min';
-  }
-  function setDate() {
-    const d = new Date();
-    document.getElementById('today-date').textContent =
-      d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-  }
-  function updateStats() {
-    const out = entries.filter(e => !e.back).length;
-    const done = entries.filter(e => e.back);
-    const avg = done.length
-      ? Math.round(done.reduce((s,e) => s + (e.back - e.out), 0) / done.length / 60000)
-      : null;
-    document.getElementById('stat-out').textContent = out;
-    document.getElementById('stat-total').textContent = entries.length;
-    document.getElementById('stat-avg').textContent = avg !== null ? avg : '—';
-  }
-  function render() {
-    const tbody = document.getElementById('log-body');
-    if (!entries.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty">No trips yet — enter a name and click Send Out.</td></tr>';
-      updateStats(); return;
-    }
-    const now = new Date();
-    tbody.innerHTML = [...entries].reverse().map((e, ri) => {
-      const i = entries.length - 1 - ri;
-      const dur = e.back ? elapsed(e.out, e.back) : elapsed(e.out, now);
-      const mins = e.back ? 0 : Math.round((now - e.out) / 60000);
-      const warn = !e.back && mins >= 10;
-      return `<tr class="${warn ? 'warn' : ''}">
-        <td class="name-bold">${e.name}</td>
-        <td>${e.dest}</td>
-        <td>${fmtTime(e.out)}</td>
-        <td>${e.back ? fmtTime(e.back) : '<span style="color:#ccc">—</span>'}</td>
-        <td class="${warn ? 'warn-text' : ''}">${dur}${warn ? ' ⚠️' : ''}</td>
-        <td>${e.back ? '<span class="badge-back">back</span>' : '<span class="badge-out">out</span>'}</td>
-        <td style="display:flex;gap:6px;align-items:center;">
-          ${!e.back ? `<button class="return-btn" onclick="markBack(${i})">Mark back</button>` : ''}
-          <button class="del-btn" onclick="del(${i})" title="Delete">✕</button>
-        </td>
-      </tr>`;
-    }).join('');
-    updateStats();
-  }
-  function sendOut() {
-    const el = document.getElementById('name-input');
-    const name = el.value.trim();
-    if (!name) { el.style.borderColor = 'red'; setTimeout(() => el.style.borderColor = '#ccc', 1200); return; }
-    const dest = document.getElementById('dest-select').value;
-    entries.push({ name, dest, out: new Date(), back: null });
-    el.value = '';
-    el.focus();
+  var now=new Date();
+  var html='';
+  var shown=[...filtered].reverse();
+  shown.forEach(function(e){
+    var i=entries.indexOf(e);
+    var m=e.back?0:mins(e.out,now);
+    var warn=!e.back&&m>=10;
+    var d=e.back?dur(e.out,e.back):dur(e.out,now);
+    html+='<tr class="'+(warn?'warn':'')+'">'+
+      '<td><span class="grade-tag">'+e.grade+'</span></td>'+
+      '<td><b>'+e.name+'</b></td>'+
+      '<td>'+e.dest+'</td>'+
+      '<td>'+fmt(e.out)+'</td>'+
+      '<td>'+(e.back?fmt(e.back):'<span style="color:#ccc">—</span>')+'</td>'+
+      '<td class="'+(warn?'warn-txt':'')+'">'+d+(warn?' ⚠️':'')+'</td>'+
+      '<td>'+(e.back?'<span class="badge-back">back</span>':'<span class="badge-out">out</span>')+'</td>'+
+      '<td style="display:flex;gap:5px;">'+
+        (!e.back?'<button class="btn-back" onclick="markBack('+i+')">Mark Back</button>':'')+
+        '<button class="btn-del" onclick="del('+i+')" title="Remove">✕</button>'+
+      '</td></tr>';
+  });
+  tb.innerHTML=html;
+  updateStats();
+}
+
+function sendOut(){
+  var el=document.getElementById('nameInput');
+  var name=el.value.trim();
+  if(!name){el.style.borderColor='red';setTimeout(function(){el.style.borderColor='#ccc';},1200);return;}
+  var grade=document.getElementById('gradeSelect').value;
+  var dest=document.getElementById('destSelect').value;
+  entries.push({name:name,grade:grade,dest:dest,out:new Date(),back:null});
+  el.value='';el.focus();
+  render();
+}
+
+function markBack(i){entries[i].back=new Date();render();}
+function del(i){entries.splice(i,1);render();}
+function clearAll(){
+  var msg=activeGrade==='All'?'Clear ALL entries?':'Clear all '+activeGrade+' entries?';
+  if(!entries.length)return;
+  if(confirm(msg)){
+    if(activeGrade==='All'){entries=[];}
+    else{entries=entries.filter(function(e){return e.grade!==activeGrade;});}
     render();
   }
-  function markBack(i) { entries[i].back = new Date(); render(); }
-  function del(i) { entries.splice(i, 1); render(); }
-  function clearAll() {
-    if (!entries.length) return;
-    if (confirm('Clear all entries for today?')) { entries.length = 0; render(); }
-  }
-  document.getElementById('name-input').addEventListener('keydown', e => { if (e.key === 'Enter') sendOut(); });
-  setDate();
-  render();
-  setInterval(render, 30000);
+}
+
+document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')sendOut();});
+setDate();
+buildGradeBar();
+render();
+setInterval(render,30000);
 </script>
 </body>
 </html>
